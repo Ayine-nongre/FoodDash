@@ -7,10 +7,10 @@ export const login = async (req, res) => {
     const { email, password } = data
 
     const user = await User.findOne({ where: { email: email }})
-    if (!user) return res.status(401).json({ message: "Incorrect email or password"})
+    if (!user) return res.status(401).json({ message: "Incorrect email or password" })
 
     const isAuthorised = await bcrypt.compare(password, user.password)
-    if (!isAuthorised) return res.status(401).json({ message: "Incorrect email or password"})
+    if (!isAuthorised) return res.status(401).json({ message: "Incorrect email or password" })
 
     res.status(200).json({
         message: "Login succesful",

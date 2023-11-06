@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import db from './config/db.js';
 import { signup } from './controller/signup.js';
 import { login } from './controller/login.js';
+import { changePassword } from './controller/changePassword.js';
 
 const app = express()
 
@@ -19,6 +20,8 @@ db.authenticate()
 app.post("/signup", signup)
 
 app.post("/login", login)
+
+app.put("/changePassword/", changePassword)
 
 app.listen(3000 || process.env.PORT, () => {
     console.log("Server is running succesfully")
