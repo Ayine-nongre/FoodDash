@@ -16,6 +16,9 @@ export const signup = async (req, res) => {
 
     if (!hashedPassword) return res.status(500).json({ message: "Internal server error"})
 
+    const checkUser = await User.findOne({ where : { email: email }})
+    if (checkUser) return res.json( { message: "User with email " + email + " exists already" })
+
     const user = await User.create({
         name: name,
         email: email,
