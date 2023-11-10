@@ -4,6 +4,7 @@ import db from './config/db.js';
 import { signup } from './controller/signup.js';
 import { login } from './controller/login.js';
 import { changePassword } from './controller/changePassword.js';
+import { resetPassword, sendOTP, verifyOTP } from './controller/resetPassword.js';
 
 const app = express()
 
@@ -22,6 +23,12 @@ app.post("/signup", signup)
 app.post("/login", login)
 
 app.put("/changePassword/", changePassword)
+
+app.post("/sendOTP", sendOTP)
+
+app.post("/verifyOTP/", verifyOTP)
+
+app.post("/resetPassword/", resetPassword)
 
 app.listen(3000 || process.env.PORT, () => {
     console.log("Server is running succesfully")

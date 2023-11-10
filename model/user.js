@@ -1,7 +1,7 @@
 import db from "../config/db.js"
 import { DataTypes } from "sequelize"
 
-const User = db.define(
+export const User = db.define(
     "User",
     {
         id: {
@@ -9,6 +9,10 @@ const User = db.define(
             defaultValue: DataTypes.UUIDV4,
             unique: true,
             primaryKey: true
+        },
+        username: {
+            type: DataTypes.CHAR,
+            allowNull: false
         },
         email: {
             type: DataTypes.CHAR,
@@ -20,5 +24,3 @@ const User = db.define(
     },
     { timestamps: false }
 )
-
-export default User
