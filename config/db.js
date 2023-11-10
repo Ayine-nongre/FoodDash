@@ -5,8 +5,8 @@ dotenv.config()
 
 const db = new Sequelize(
   'foodDash',
-  process.env.username,
-  process.env.password,
+  process.env.MYSQL,
+  process.env.PASS,
   {
     dialect: "mysql",
     host: 'localhost',
