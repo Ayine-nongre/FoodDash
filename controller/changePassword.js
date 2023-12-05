@@ -6,13 +6,14 @@ export const changePassword = async (req, res) => {
     if (!data || !(req.query.user_email)) return res.json({ message: "No data received"})
     const { current_password, new_password, confirm_password } = data
 
+    if (new_password != confirm_password) res.status(401).json({ message: "New password do not match confirmation" })
+
     const user = await User.findOne({ where: { email: req.query.user_email }})
     if (!user) return res.status(404).json({ message: "This email is not registered to foodDash" })
 
     const isAuthorised = await bcrypt.compare(current_password, user.password)
     if (!isAuthorised) return res.status(401).json({ message: "Incorrect password" })
 
-    if (new_password != confirm_password) res.status(401).json({ message: "New password do not match confirmation" })
     const hashedPassword = await bcrypt.hash(new_password, 10)
     if (!hashedPassword) return res.status(500).json({ message: "Internal server error"})
     await user.update({ password: hashedPassword }).catch(err => console.log(err))
