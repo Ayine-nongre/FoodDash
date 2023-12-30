@@ -3,12 +3,14 @@ import bcrypt from 'bcrypt'
 
 export const changePassword = async (req, res) => {
     const data = req.body
-    if (!data || !(req.query.user_email)) return res.json({ message: "No data received"})
+    const usermail = req.user.email
+    console.log(usermail)
+    if (!data) return res.json({ message: "No data received"})
     const { current_password, new_password, confirm_password } = data
 
     if (new_password != confirm_password) res.status(401).json({ message: "New password do not match confirmation" })
 
-    const user = await User.findOne({ where: { email: req.query.user_email }})
+    const user = await User.findOne({ where: { email: usermail }})
     if (!user) return res.status(404).json({ message: "This email is not registered to foodDash" })
 
     const isAuthorised = await bcrypt.compare(current_password, user.password)

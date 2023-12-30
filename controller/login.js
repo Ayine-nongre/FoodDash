@@ -1,3 +1,4 @@
+import { createToken } from "../middleware/authentication.js"
 import { User } from "../model/user.js"
 import bcrypt from 'bcrypt'
 
@@ -12,8 +13,5 @@ export const login = async (req, res) => {
     const isAuthorised = await bcrypt.compare(password, user.password)
     if (!isAuthorised) return res.status(401).json({ message: "Incorrect email or password" })
 
-    res.status(200).json({
-        message: "Login succesful",
-        status: "Success"
-    })
+    createToken(user, 200, res)
 }
