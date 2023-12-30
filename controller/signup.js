@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { User } from '../model/user.js'
+import { createToken } from '../middleware/authentication.js'
 
 
 export const signup = async (req, res) => {
@@ -21,9 +22,5 @@ export const signup = async (req, res) => {
         password: hashedPassword
     })
 
-    res.status(201).json({
-        Username: name,
-        Email: email,
-        status: "Success"
-    })
+    createToken(user, 201, res)
 }
